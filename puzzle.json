@@ -1,0 +1,254 @@
+{
+  "title": "Parole Crociate Governance DOS",
+  "size": 20,
+  "entries": [
+    {
+      "answer": "MEETING",
+      "clue": "Termine inglese comunemente utilizzato per indicare una riunione.",
+      "row": 1,
+      "col": 3,
+      "direction": "across",
+      "number": 1
+    },
+    {
+      "answer": "TDL",
+      "clue": "Acronimo di Tavolo di Lavoro.",
+      "row": 1,
+      "col": 6,
+      "direction": "down",
+      "number": 2
+    },
+    {
+      "answer": "PMT",
+      "clue": "Project Management Team.",
+      "row": 2,
+      "col": 10,
+      "direction": "across",
+      "number": 3
+    },
+    {
+      "answer": "PMO",
+      "clue": "Struttura che supporta, standardizza o governa la gestione di progetti e programmi.",
+      "row": 2,
+      "col": 10,
+      "direction": "down",
+      "number": 3
+    },
+    {
+      "answer": "PORTFOLIO",
+      "clue": "Insieme di progetti, programmi e iniziative governati in funzione della strategia.",
+      "row": 3,
+      "col": 0,
+      "direction": "across",
+      "number": 4
+    },
+    {
+      "answer": "RAID",
+      "clue": "Registro di rischi, assunzioni, issue e dipendenze.",
+      "row": 3,
+      "col": 2,
+      "direction": "down",
+      "number": 5
+    },
+    {
+      "answer": "OPA",
+      "clue": "Procedure, template, repository e conoscenze consolidate dell’organizzazione.",
+      "row": 3,
+      "col": 8,
+      "direction": "down",
+      "number": 6
+    },
+    {
+      "answer": "PROCESSO",
+      "clue": "Sequenza strutturata di attività finalizzata a produrre un risultato.",
+      "row": 4,
+      "col": 8,
+      "direction": "across",
+      "number": 7
+    },
+    {
+      "answer": "STAKEHOLDER",
+      "clue": "Persona, gruppo o organizzazione che può influenzare o essere influenzata dal progetto.",
+      "row": 4,
+      "col": 14,
+      "direction": "down",
+      "number": 8
+    },
+    {
+      "answer": "PROGRAMMA",
+      "clue": "Insieme coordinato di progetti correlati gestiti per ottenere benefici comuni.",
+      "row": 5,
+      "col": 5,
+      "direction": "down",
+      "number": 9
+    },
+    {
+      "answer": "DELIVERABLE",
+      "clue": "Output verificabile prodotto dal progetto.",
+      "row": 5,
+      "col": 16,
+      "direction": "down",
+      "number": 10
+    },
+    {
+      "answer": "REPORTING",
+      "clue": "Attività periodica di raccolta e comunicazione di avanzamento, dati e indicatori.",
+      "row": 5,
+      "col": 19,
+      "direction": "down",
+      "number": 11
+    },
+    {
+      "answer": "WBS",
+      "clue": "Scomposizione gerarchica del lavoro progettuale.",
+      "row": 6,
+      "col": 9,
+      "direction": "across",
+      "number": 12
+    },
+    {
+      "answer": "WORKITEM",
+      "clue": "Unità di lavoro tracciata all’interno di uno strumento di gestione.",
+      "row": 6,
+      "col": 9,
+      "direction": "down",
+      "number": 12
+    },
+    {
+      "answer": "SLA",
+      "clue": "Accordo che definisce i livelli di servizio attesi.",
+      "row": 6,
+      "col": 11,
+      "direction": "down",
+      "number": 13
+    },
+    {
+      "answer": "GOVOPS",
+      "clue": "Ambito operativo della governance.",
+      "row": 7,
+      "col": 1,
+      "direction": "down",
+      "number": 14
+    },
+    {
+      "answer": "SOW",
+      "clue": "Documento che descrive il lavoro da realizzare e i risultati attesi.",
+      "row": 8,
+      "col": 0,
+      "direction": "across",
+      "number": 15
+    },
+    {
+      "answer": "GOVERNANCE",
+      "clue": "Insieme di regole, processi e responsabilità con cui si indirizzano e controllano le iniziative.",
+      "row": 8,
+      "col": 5,
+      "direction": "across",
+      "number": 16
+    },
+    {
+      "answer": "KPI",
+      "clue": "Indicatore chiave utilizzato per misurare una performance.",
+      "row": 9,
+      "col": 3,
+      "direction": "down",
+      "number": 17
+    },
+    {
+      "answer": "PIANIFICAZIONE",
+      "clue": "Processo con cui si definiscono attività, tempi, risorse e sequenza del lavoro.",
+      "row": 10,
+      "col": 3,
+      "direction": "across",
+      "number": 18
+    },
+    {
+      "answer": "PMI",
+      "clue": "Organizzazione internazionale di riferimento per il project management.",
+      "row": 11,
+      "col": 1,
+      "direction": "across",
+      "number": 19
+    },
+    {
+      "answer": "RACI",
+      "clue": "Matrice che chiarisce chi è responsabile, accountable, consultato e informato.",
+      "row": 11,
+      "col": 16,
+      "direction": "across",
+      "number": 20
+    },
+    {
+      "answer": "MVP",
+      "clue": "Versione minima di un prodotto sufficiente a validarne il valore.",
+      "row": 12,
+      "col": 5,
+      "direction": "across",
+      "number": 21
+    },
+    {
+      "answer": "EEF",
+      "clue": "Fattori ambientali interni o esterni che condizionano il progetto.",
+      "row": 12,
+      "col": 9,
+      "direction": "across",
+      "number": 22
+    },
+    {
+      "answer": "BM",
+      "clue": "Acronimo di Board Meeting.",
+      "row": 13,
+      "col": 8,
+      "direction": "across",
+      "number": 23
+    },
+    {
+      "answer": "BACKLOG",
+      "clue": "Elenco ordinato e prioritizzato del lavoro da realizzare.",
+      "row": 13,
+      "col": 8,
+      "direction": "down",
+      "number": 23
+    },
+    {
+      "answer": "OKR",
+      "clue": "Metodo di definizione degli obiettivi tramite risultati chiave misurabili.",
+      "row": 14,
+      "col": 12,
+      "direction": "across",
+      "number": 24
+    },
+    {
+      "answer": "RISCHIO",
+      "clue": "Evento o condizione incerta che può influenzare gli obiettivi.",
+      "row": 15,
+      "col": 5,
+      "direction": "across",
+      "number": 25
+    },
+    {
+      "answer": "COLLAUDO",
+      "clue": "Verifica formale che una soluzione soddisfi requisiti e criteri previsti.",
+      "row": 17,
+      "col": 6,
+      "direction": "across",
+      "number": 26
+    },
+    {
+      "answer": "UAT",
+      "clue": "Test di accettazione eseguito dal punto di vista dell’utente o del business.",
+      "row": 17,
+      "col": 11,
+      "direction": "down",
+      "number": 27
+    },
+    {
+      "answer": "GANTT",
+      "clue": "Diagramma che rappresenta attività e durata lungo una scala temporale.",
+      "row": 19,
+      "col": 8,
+      "direction": "across",
+      "number": 28
+    }
+  ]
+}

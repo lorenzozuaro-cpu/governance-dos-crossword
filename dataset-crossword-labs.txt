@@ -1,0 +1,31 @@
+MEETING	Termine inglese comunemente utilizzato per indicare una riunione.
+TDL	Acronimo di Tavolo di Lavoro.
+PMT	Project Management Team.
+PMO	Struttura che supporta, standardizza o governa la gestione di progetti e programmi.
+PORTFOLIO	Insieme di progetti, programmi e iniziative governati in funzione della strategia.
+RAID	Registro di rischi, assunzioni, issue e dipendenze.
+OPA	Procedure, template, repository e conoscenze consolidate dell’organizzazione.
+PROCESSO	Sequenza strutturata di attività finalizzata a produrre un risultato.
+STAKEHOLDER	Persona, gruppo o organizzazione che può influenzare o essere influenzata dal progetto.
+PROGRAMMA	Insieme coordinato di progetti correlati gestiti per ottenere benefici comuni.
+DELIVERABLE	Output verificabile prodotto dal progetto.
+REPORTING	Attività periodica di raccolta e comunicazione di avanzamento, dati e indicatori.
+WBS	Scomposizione gerarchica del lavoro progettuale.
+WORKITEM	Unità di lavoro tracciata all’interno di uno strumento di gestione.
+SLA	Accordo che definisce i livelli di servizio attesi.
+GOVOPS	Ambito operativo della governance.
+SOW	Documento che descrive il lavoro da realizzare e i risultati attesi.
+GOVERNANCE	Insieme di regole, processi e responsabilità con cui si indirizzano e controllano le iniziative.
+KPI	Indicatore chiave utilizzato per misurare una performance.
+PIANIFICAZIONE	Processo con cui si definiscono attività, tempi, risorse e sequenza del lavoro.
+PMI	Organizzazione internazionale di riferimento per il project management.
+RACI	Matrice che chiarisce chi è responsabile, accountable, consultato e informato.
+MVP	Versione minima di un prodotto sufficiente a validarne il valore.
+EEF	Fattori ambientali interni o esterni che condizionano il progetto.
+BM	Acronimo di Board Meeting.
+BACKLOG	Elenco ordinato e prioritizzato del lavoro da realizzare.
+OKR	Metodo di definizione degli obiettivi tramite risultati chiave misurabili.
+RISCHIO	Evento o condizione incerta che può influenzare gli obiettivi.
+COLLAUDO	Verifica formale che una soluzione soddisfi requisiti e criteri previsti.
+UAT	Test di accettazione eseguito dal punto di vista dell’utente o del business.
+GANTT	Diagramma che rappresenta attività e durata lungo una scala temporale.
