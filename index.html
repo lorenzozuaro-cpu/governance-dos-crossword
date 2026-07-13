@@ -7,21 +7,24 @@
 <header><h1 id="title">Parole Crociate Governance DOS</h1><p>Quanto conosci il linguaggio della governance?</p></header>
 <main class="wrap">
 <section class="card">
-    <div class="toolbar">
-        <button onclick="check()">Controlla</button>
+   <div class="toolbar">
+    <button onclick="check()">Controlla</button>
 
-        <button class="secondary" onclick="reveal()">
-            Soluzione
-        </button>
+    <button class="secondary" onclick="helpSelectedWord()">
+        Aiuto
+    </button>
 
-        <button class="secondary" onclick="resetPuzzle()">
-            Ricomincia
-        </button>
+    <button class="secondary finish-button" onclick="finishGame()">
+        Termina
+    </button>
 
-        <span class="timer" id="timer">⏱️ 00:00</span>
+    <button class="secondary" onclick="resetPuzzle()">
+        Ricomincia
+    </button>
 
-        <span class="status" id="status"></span>
-    </div>
+    <span class="timer" id="timer">⏱️ 00:00</span>
+    <span class="status" id="status"></span>
+</div>
 
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
