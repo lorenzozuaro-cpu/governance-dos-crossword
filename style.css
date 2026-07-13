@@ -8,11 +8,11 @@ body{
     color:var(--ink);
 
     background:
-        linear-gradient(
-            rgba(0,0,0,0.72),
-            rgba(0,0,0,0.72)
-        ),
-        url('DOS_Design_sfondo.png');
+    linear-gradient(
+        rgba(0,0,0,0.45),
+        rgba(0,0,0,0.65)
+    ),
+    url('DOS_Design_sfondo.png');
 
     background-size:cover;
     background-position:center;
