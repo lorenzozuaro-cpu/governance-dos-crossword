@@ -1,5 +1,12 @@
 
-let puzzle, cells=[], currentEntry=null;
+let puzzle;
+let cells = [];
+let currentEntry = null;
+
+let timerInterval = null;
+let elapsedSeconds = 0;
+let timerStarted = false;
+let puzzleCompleted = false;
 const key=(r,c)=>`${r}-${c}`;
 fetch('puzzle.json').then(r=>r.json()).then(data=>{puzzle=data;init();});
 
