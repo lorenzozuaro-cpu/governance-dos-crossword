@@ -8,6 +8,34 @@ let elapsedSeconds = 0;
 let timerStarted = false;
 let puzzleCompleted = false;
 const key=(r,c)=>`${r}-${c}`;
+function updateTimerDisplay(){
+    const timer = document.getElementById('timer');
+    if(!timer) return;
+
+    const minutes = Math.floor(elapsedSeconds / 60);
+    const seconds = elapsedSeconds % 60;
+
+    timer.textContent =
+        `⏱️ ${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+}
+
+function startTimer(){
+    if(timerStarted || puzzleCompleted) return;
+
+    timerStarted = true;
+
+    timerInterval = setInterval(() => {
+        elapsedSeconds++;
+        updateTimerDisplay();
+    }, 1000);
+}
+
+function stopTimer(){
+    if(timerInterval){
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+}
 fetch('puzzle.json').then(r=>r.json()).then(data=>{puzzle=data;init();});
 
 function init(){
@@ -70,8 +98,26 @@ function selectEntry(e,focus=true){
 }
 function getEntryCells(e){return Array.from({length:e.answer.length},(_,i)=>cells.find(x=>x.r===e.row+(e.direction==='down'?i:0)&&x.c===e.col+(e.direction==='across'?i:0)));}
 function handleInput(ev,r,c){
- ev.target.value=ev.target.value.replace(/[^a-zA-ZÀ-ÿ]/g,'').slice(-1).toUpperCase();save();updateProgress();
- if(ev.target.value&&currentEntry){const arr=getEntryCells(currentEntry),idx=arr.findIndex(x=>x.r===r&&x.c===c);if(idx<arr.length-1)arr[idx+1].inp.focus();}
+    ev.target.value = ev.target.value
+        .replace(/[^a-zA-ZÀ-ÿ]/g,'')
+        .slice(-1)
+        .toUpperCase();
+
+    if(ev.target.value){
+        startTimer();
+    }
+
+    save();
+    updateProgress();
+
+    if(ev.target.value && currentEntry){
+        const arr = getEntryCells(currentEntry);
+        const idx = arr.findIndex(x => x.r === r && x.c === c);
+
+        if(idx < arr.length - 1){
+            arr[idx + 1].inp.focus();
+        }
+    }
 }
 function handleKey(ev,r,c){
  if(ev.key==='Backspace'&&!ev.target.value&&currentEntry){const arr=getEntryCells(currentEntry),idx=arr.findIndex(x=>x.r===r&&x.c===c);if(idx>0){arr[idx-1].inp.value='';arr[idx-1].inp.focus();save();updateProgress();}}
