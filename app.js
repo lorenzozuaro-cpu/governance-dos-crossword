@@ -341,7 +341,9 @@ function reveal(){
 
     save();
     updateProgress();
-    check();
+    puzzleCompleted = true;
+    stopTimer();
+    showFinalResult();
 }
 function resetPuzzle(){
     if(!confirm('Cancellare tutte le risposte?')) return;
