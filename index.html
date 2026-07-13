@@ -9,4 +9,57 @@
 <section class="card"><div class="toolbar"><button onclick="check()">Controlla</button><button class="secondary" onclick="reveal()">Soluzione</button><button class="secondary" onclick="resetPuzzle()">Ricomincia</button><span class="timer" id="timer">⏱️ 00:00</span><span class="status" id="status"></span></div><div class="grid" id="grid"></div><div class="legend">Le risposte vengono salvate automaticamente nel browser.</div></section>
 <aside class="card clues"><div id="across"></div><div id="down"></div></aside>
 </main><div class="footer">Progetto open source — personalizzabile modificando il file puzzle.json</div>
+  <div class="result-modal" id="resultModal" aria-hidden="true">
+    <div class="result-overlay" onclick="closeResultModal()"></div>
+
+    <div class="result-panel" role="dialog" aria-modal="true">
+        <button
+            class="result-close"
+            type="button"
+            onclick="closeResultModal()"
+            aria-label="Chiudi"
+        >
+            ×
+        </button>
+
+        <div class="result-icon" id="resultIcon">🏆</div>
+
+        <p class="result-kicker">DOS Governance Challenge</p>
+
+        <h2 id="resultTitle">Governance Master</h2>
+
+        <div class="result-score">
+            <strong id="resultScore">100</strong>
+            <span>/100</span>
+        </div>
+
+        <div class="result-stats">
+            <div>
+                <span>Tempo</span>
+                <strong id="resultTime">00:00</strong>
+            </div>
+
+            <div>
+                <span>Controlli</span>
+                <strong id="resultChecks">0</strong>
+            </div>
+        </div>
+
+        <p class="result-message" id="resultMessage"></p>
+
+        <div class="result-actions">
+            <button type="button" onclick="closeResultModal()">
+                Chiudi
+            </button>
+
+            <button
+                type="button"
+                class="secondary"
+                onclick="shareResult()"
+            >
+                Condividi risultato
+            </button>
+        </div>
+    </div>
+</div>
 <script src="app.js"></script></body></html>
