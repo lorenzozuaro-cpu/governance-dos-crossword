@@ -10,6 +10,7 @@ let puzzleCompleted = false;
 let checkCount = 0;
 let wrongChecks = 0;
 let solutionUsed = false;
+let helpedCells = new Set();
 const key=(r,c)=>`${r}-${c}`;
 function updateTimerDisplay(){
     const timer = document.getElementById('timer');
@@ -125,11 +126,13 @@ if(savedGameState){
         wrongChecks = Number(gameState.wrongChecks) || 0;
         solutionUsed = Boolean(gameState.solutionUsed);
         puzzleCompleted = Boolean(gameState.puzzleCompleted);
+        helpedCells = new Set(gameState.helpedCells || []);
     }catch(error){
         checkCount = 0;
         wrongChecks = 0;
         solutionUsed = false;
         puzzleCompleted = false;
+        helpedCells = new Set();
     }
 }
 
@@ -207,7 +210,8 @@ function save(){
             checkCount: checkCount,
             wrongChecks: wrongChecks,
             solutionUsed: solutionUsed,
-            puzzleCompleted: puzzleCompleted
+            puzzleCompleted: puzzleCompleted,
+            helpedCells: Array.from(helpedCells)
         })
     );
 }
@@ -232,15 +236,44 @@ function updateProgress(){
     }
 }
 function calculateScore(){
-    if(solutionUsed){
+    const totalCells = cells.length;
+
+    if(totalCells === 0){
         return 0;
     }
 
-    let score = 100;
+    const correctUserCells = cells.filter(cell => {
+        const cellKey = key(cell.r, cell.c);
 
+        // Le caselle compilate tramite Aiuto non assegnano punti
+        if(helpedCells.has(cellKey)){
+            return false;
+        }
+
+        if(!cell.inp.value){
+            return false;
+        }
+
+        const entry = cell.entries[0];
+        const index =
+            entry.direction === 'across'
+                ? cell.c - entry.col
+                : cell.r - entry.row;
+
+        return cell.inp.value === entry.answer[index];
+    }).length;
+
+    let score = Math.round(
+        (correctUserCells / totalCells) * 100
+    );
+
+    // Penalità per errori rilevati con Controlla
     score -= wrongChecks * 2;
+
+    // Penalità dal secondo controllo in poi
     score -= Math.max(0, checkCount - 1) * 3;
 
+    // Penalità dopo i primi 5 minuti
     const extraMinutes = Math.max(
         0,
         Math.floor((elapsedSeconds - 300) / 60)
@@ -427,25 +460,42 @@ function check(){
         showFinalResult();
     }
 }
-function reveal(){
-    if(!confirm('Mostrare tutta la soluzione?')) return;
+function helpSelectedWord(){
+    if(!currentEntry){
+        alert('Seleziona prima una parola da completare.');
+        return;
+    }
 
-    solutionUsed = true;
+    const entryCells = getEntryCells(currentEntry);
 
-    cells.forEach(x => {
-        const entry = x.entries[0];
-        const index =
-            entry.direction === 'across'
-                ? x.c - entry.col
-                : x.r - entry.row;
-
-        x.inp.value = entry.answer[index];
+    entryCells.forEach((cell, index) => {
+        cell.inp.value = currentEntry.answer[index];
+        helpedCells.add(key(cell.r, cell.c));
     });
 
     save();
     updateProgress();
+}
+function finishGame(){
+    if(puzzleCompleted){
+        showFinalResult();
+        return;
+    }
+
+    const filledCells = cells.filter(cell => cell.inp.value).length;
+
+    if(filledCells === 0){
+        alert('Inserisci almeno una risposta prima di terminare la sfida.');
+        return;
+    }
+
+    if(!confirm('Vuoi terminare la sfida e calcolare il punteggio?')){
+        return;
+    }
+
     puzzleCompleted = true;
     stopTimer();
+    save();
     showFinalResult();
 }
 function resetPuzzle(){
@@ -459,6 +509,7 @@ function resetPuzzle(){
     checkCount = 0;
     wrongChecks = 0;
     solutionUsed = false;
+    helpedCells = new Set();
 
     cells.forEach(x => {
         x.inp.value = '';
