@@ -115,6 +115,24 @@ if(saved){
         x.inp.value = vals[key(x.r,x.c)] || '';
     });
 }
+const savedGameState = localStorage.getItem('governanceDosGameState');
+
+if(savedGameState){
+    try{
+        const gameState = JSON.parse(savedGameState);
+
+        checkCount = Number(gameState.checkCount) || 0;
+        wrongChecks = Number(gameState.wrongChecks) || 0;
+        solutionUsed = Boolean(gameState.solutionUsed);
+        puzzleCompleted = Boolean(gameState.puzzleCompleted);
+    }catch(error){
+        checkCount = 0;
+        wrongChecks = 0;
+        solutionUsed = false;
+        puzzleCompleted = false;
+    }
+}
+
 restoreTimerState();
 updateProgress();
 }
@@ -171,7 +189,28 @@ function handleKey(ev,r,c){
  if(ev.key==='Backspace'&&!ev.target.value&&currentEntry){const arr=getEntryCells(currentEntry),idx=arr.findIndex(x=>x.r===r&&x.c===c);if(idx>0){arr[idx-1].inp.value='';arr[idx-1].inp.focus();save();updateProgress();}}
  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(ev.key)){ev.preventDefault();const dr=ev.key==='ArrowUp'?-1:ev.key==='ArrowDown'?1:0,dc=ev.key==='ArrowLeft'?-1:ev.key==='ArrowRight'?1:0;const next=cells.find(x=>x.r===r+dr&&x.c===c+dc);if(next)next.inp.focus();}
 }
-function save(){const vals={};cells.forEach(x=>vals[key(x.r,x.c)]=x.inp.value);localStorage.setItem('governanceDosCrossword',JSON.stringify(vals));}
+function save(){
+    const vals = {};
+
+    cells.forEach(x => {
+        vals[key(x.r,x.c)] = x.inp.value;
+    });
+
+    localStorage.setItem(
+        'governanceDosCrossword',
+        JSON.stringify(vals)
+    );
+
+    localStorage.setItem(
+        'governanceDosGameState',
+        JSON.stringify({
+            checkCount: checkCount,
+            wrongChecks: wrongChecks,
+            solutionUsed: solutionUsed,
+            puzzleCompleted: puzzleCompleted
+        })
+    );
+}
 function updateProgress(){
     const done = cells.filter(x => x.inp.value).length;
     const total = cells.length;
@@ -428,7 +467,7 @@ function resetPuzzle(){
 
     localStorage.removeItem('governanceDosCrossword');
     localStorage.removeItem('governanceDosTimer');
-
+    localStorage.removeItem('governanceDosGameState');
     updateTimerDisplay();
     updateProgress();
 }
