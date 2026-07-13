@@ -25,7 +25,7 @@ body{
     backdrop-filter:blur(8px);
     color:white;
 } header h1{margin:0 0 6px;font-size:clamp(24px,4vw,40px)}
-header p{margin:0;color:#d0d5dd}.wrap{max-width:1200px;margin:22px auto;padding:0 16px;display:grid;grid-template-columns:minmax(320px,680px) minmax(280px,1fr);gap:22px}
+header p{margin:0;color:#d0d5dd}.wrap{max-width:1200px;margin:22px auto;padding:0 16px;display:grid;grid-template-columns:minmax(320px,680px) minmax(280px,1fr);gap:22px;align-items:start}
 .card{
     background:rgba(20,20,20,0.82);
     backdrop-filter:blur(12px);
