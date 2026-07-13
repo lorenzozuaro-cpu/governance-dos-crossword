@@ -444,3 +444,36 @@ button.secondary{
     transition:width 0.25s ease;
     box-shadow:0 0 14px rgba(47,111,237,0.45);
 }
+/* SCORRIMENTO DEFINIZIONI */
+.clues{
+    max-height:calc(100vh - 170px);
+    overflow-y:auto;
+    overflow-x:hidden;
+    scrollbar-width:thin;
+    scrollbar-color:#5f6b7a rgba(255,255,255,0.06);
+}
+
+.clues::-webkit-scrollbar{
+    width:8px;
+}
+
+.clues::-webkit-scrollbar-track{
+    background:rgba(255,255,255,0.06);
+    border-radius:999px;
+}
+
+.clues::-webkit-scrollbar-thumb{
+    background:#5f6b7a;
+    border-radius:999px;
+}
+
+.clues::-webkit-scrollbar-thumb:hover{
+    background:#7b8798;
+}
+
+@media(max-width:850px){
+    .clues{
+        max-height:none;
+        overflow:visible;
+    }
+}
