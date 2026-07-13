@@ -28,15 +28,52 @@ function startTimer(){
     timerStarted = true;
 
     timerInterval = setInterval(() => {
-        elapsedSeconds++;
-        updateTimerDisplay();
-    }, 1000);
+    elapsedSeconds++;
+    updateTimerDisplay();
+    saveTimerState();
+}, 1000);
 }
 
 function stopTimer(){
     if(timerInterval){
         clearInterval(timerInterval);
         timerInterval = null;
+    }
+
+    timerStarted = false;
+    saveTimerState();
+}
+
+function saveTimerState(){
+    localStorage.setItem(
+        'governanceDosTimer',
+        JSON.stringify({
+            elapsedSeconds: elapsedSeconds
+        })
+    );
+}
+
+function restoreTimerState(){
+    const savedTimer = localStorage.getItem('governanceDosTimer');
+
+    if(!savedTimer){
+        elapsedSeconds = 0;
+        timerStarted = false;
+        updateTimerDisplay();
+        return;
+    }
+
+    try{
+        const timerData = JSON.parse(savedTimer);
+
+        elapsedSeconds = Number(timerData.elapsedSeconds) || 0;
+        timerStarted = false;
+
+        updateTimerDisplay();
+    }catch(error){
+        elapsedSeconds = 0;
+        timerStarted = false;
+        updateTimerDisplay();
     }
 }
 fetch('puzzle.json').then(r=>r.json()).then(data=>{puzzle=data;init();});
@@ -69,10 +106,17 @@ function init(){
    grid.appendChild(div);
  }
  buildClues('across','Orizzontali'); buildClues('down','Verticali');
- const saved=localStorage.getItem('governanceDosCrossword');
- if(saved){const vals=JSON.parse(saved);cells.forEach(x=>x.inp.value=vals[key(x.r,x.c)]||'');}
- updateProgress();
+ const saved = localStorage.getItem('governanceDosCrossword');
+
+if(saved){
+    const vals = JSON.parse(saved);
+
+    cells.forEach(x => {
+        x.inp.value = vals[key(x.r,x.c)] || '';
+    });
 }
+restoreTimerState();
+updateProgress();
 function buildClues(direction,title){
  const box=document.getElementById(direction); box.innerHTML=`<h2>${title}</h2>`;
  puzzle.entries.filter(e=>e.direction===direction).sort((a,b)=>a.number-b.number).forEach(e=>{
@@ -382,6 +426,7 @@ function resetPuzzle(){
     });
 
     localStorage.removeItem('governanceDosCrossword');
+    localStorage.removeItem('governanceDosTimer');
 
     updateTimerDisplay();
     updateProgress();
