@@ -127,7 +127,26 @@ function handleKey(ev,r,c){
  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(ev.key)){ev.preventDefault();const dr=ev.key==='ArrowUp'?-1:ev.key==='ArrowDown'?1:0,dc=ev.key==='ArrowLeft'?-1:ev.key==='ArrowRight'?1:0;const next=cells.find(x=>x.r===r+dr&&x.c===c+dc);if(next)next.inp.focus();}
 }
 function save(){const vals={};cells.forEach(x=>vals[key(x.r,x.c)]=x.inp.value);localStorage.setItem('governanceDosCrossword',JSON.stringify(vals));}
-function updateProgress(){const done=cells.filter(x=>x.inp.value).length;document.getElementById('status').textContent=`${done}/${cells.length} caselle`;}
+function updateProgress(){
+    const done = cells.filter(x => x.inp.value).length;
+    const total = cells.length;
+
+    const percentage = total === 0
+        ? 0
+        : Math.round((done / total) * 100);
+
+    const status = document.getElementById('status');
+    const progressBar = document.getElementById('progressBar');
+
+    if(status){
+        status.textContent =
+            `${done}/${total} caselle · ${percentage}%`;
+    }
+
+    if(progressBar){
+        progressBar.style.width = `${percentage}%`;
+    }
+}
 function calculateScore(){
     if(solutionUsed){
         return 0;
