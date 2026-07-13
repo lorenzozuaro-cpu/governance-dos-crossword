@@ -7,6 +7,9 @@ let timerInterval = null;
 let elapsedSeconds = 0;
 let timerStarted = false;
 let puzzleCompleted = false;
+let checkCount = 0;
+let wrongChecks = 0;
+let solutionUsed = false;
 const key=(r,c)=>`${r}-${c}`;
 function updateTimerDisplay(){
     const timer = document.getElementById('timer');
@@ -125,17 +128,182 @@ function handleKey(ev,r,c){
 }
 function save(){const vals={};cells.forEach(x=>vals[key(x.r,x.c)]=x.inp.value);localStorage.setItem('governanceDosCrossword',JSON.stringify(vals));}
 function updateProgress(){const done=cells.filter(x=>x.inp.value).length;document.getElementById('status').textContent=`${done}/${cells.length} caselle`;}
+function calculateScore(){
+    if(solutionUsed){
+        return 0;
+    }
+
+    let score = 100;
+
+    score -= wrongChecks * 2;
+    score -= Math.max(0, checkCount - 1) * 3;
+
+    const extraMinutes = Math.max(
+        0,
+        Math.floor((elapsedSeconds - 300) / 60)
+    );
+
+    score -= extraMinutes * 2;
+
+    return Math.max(0, Math.min(100, score));
+}
+
+function getResultMessage(score){
+    if(solutionUsed){
+        return {
+            title: "Soluzione consultata",
+            message: "È stata aperta automaticamente una Change Request per annullare il risultato."
+        };
+    }
+
+    if(score >= 95){
+        return {
+            title: "Governance Legend",
+            message: "Hai completato la sfida senza convocare una call di allineamento. Evento rarissimo."
+        };
+    }
+
+    if(score >= 85){
+        return {
+            title: "Governance Master",
+            message: "Ottima performance. Le retrospettive ti temono."
+        };
+    }
+
+    if(score >= 70){
+        return {
+            title: "PMO Specialist",
+            message: "Qualche acronimo ti ha rallentato, ma il reporting può partire."
+        };
+    }
+
+    if(score >= 50){
+        return {
+            title: "Meeting Survivor",
+            message: "Sei arrivato alla fine. Ora serve solo una riunione per analizzare le lesson learned."
+        };
+    }
+
+    if(score >= 30){
+        return {
+            title: "Action Item Creator",
+            message: "Hai creato parecchie action. Resta solo da capire chi sarà l’Accountable."
+        };
+    }
+
+    return {
+        title: "Change Request urgente",
+        message: "Il risultato richiede un tavolo di approfondimento e almeno tre follow-up."
+    };
+}
+
+function formatTime(seconds){
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(remainingSeconds).padStart(2, "0")
+    );
+}
+
+function showFinalResult(){
+    const score = calculateScore();
+    const result = getResultMessage(score);
+
+    alert(
+        "DOS Governance Challenge\n\n" +
+        "Punteggio: " + score + "/100\n" +
+        "Tempo: " + formatTime(elapsedSeconds) + "\n" +
+        "Livello: " + result.title + "\n\n" +
+        result.message
+    );
+}
 function check(){
- cells.forEach(x=>x.div.classList.remove('wrong','correct'));
- cells.forEach(x=>{
-   const expected=x.entries[0].answer[(x.entries[0].direction==='across'?x.c-x.entries[0].col:x.r-x.entries[0].row)];
-   if(x.inp.value) x.div.classList.add(x.inp.value===expected?'correct':'wrong');
- });
- const all=cells.every(x=>{const e=x.entries[0],i=e.direction==='across'?x.c-e.col:x.r-e.row;return x.inp.value===e.answer[i];});
- if(all)alert('Complimenti! Hai completato le Parole Crociate Governance DOS.');
+    checkCount++;
+
+    cells.forEach(x => {
+        x.div.classList.remove('wrong', 'correct');
+    });
+
+    let currentWrong = 0;
+
+    cells.forEach(x => {
+        const entry = x.entries[0];
+        const index =
+            entry.direction === 'across'
+                ? x.c - entry.col
+                : x.r - entry.row;
+
+        const expected = entry.answer[index];
+
+        if(x.inp.value){
+            if(x.inp.value === expected){
+                x.div.classList.add('correct');
+            }else{
+                x.div.classList.add('wrong');
+                currentWrong++;
+            }
+        }
+    });
+
+    wrongChecks += currentWrong;
+
+    const all = cells.every(x => {
+        const entry = x.entries[0];
+        const index =
+            entry.direction === 'across'
+                ? x.c - entry.col
+                : x.r - entry.row;
+
+        return x.inp.value === entry.answer[index];
+    });
+
+    if(all && !puzzleCompleted){
+        puzzleCompleted = true;
+        stopTimer();
+        showFinalResult();
+    }
 }
 function reveal(){
- if(!confirm('Mostrare tutta la soluzione?'))return;
- cells.forEach(x=>{const e=x.entries[0],i=e.direction==='across'?x.c-e.col:x.r-e.row;x.inp.value=e.answer[i];});save();check();updateProgress();
+    if(!confirm('Mostrare tutta la soluzione?')) return;
+
+    solutionUsed = true;
+
+    cells.forEach(x => {
+        const entry = x.entries[0];
+        const index =
+            entry.direction === 'across'
+                ? x.c - entry.col
+                : x.r - entry.row;
+
+        x.inp.value = entry.answer[index];
+    });
+
+    save();
+    updateProgress();
+    check();
 }
-function resetPuzzle(){if(confirm('Cancellare tutte le risposte?')){cells.forEach(x=>{x.inp.value='';x.div.classList.remove('wrong','correct')});localStorage.removeItem('governanceDosCrossword');updateProgress();}}
+function resetPuzzle(){
+    if(!confirm('Cancellare tutte le risposte?')) return;
+
+    stopTimer();
+
+    elapsedSeconds = 0;
+    timerStarted = false;
+    puzzleCompleted = false;
+    checkCount = 0;
+    wrongChecks = 0;
+    solutionUsed = false;
+
+    cells.forEach(x => {
+        x.inp.value = '';
+        x.div.classList.remove('wrong', 'correct');
+    });
+
+    localStorage.removeItem('governanceDosCrossword');
+
+    updateTimerDisplay();
+    updateProgress();
+}
