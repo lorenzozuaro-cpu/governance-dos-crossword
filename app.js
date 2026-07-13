@@ -212,13 +212,71 @@ function showFinalResult(){
     const score = calculateScore();
     const result = getResultMessage(score);
 
-    alert(
+    const modal = document.getElementById('resultModal');
+    const icon = document.getElementById('resultIcon');
+    const title = document.getElementById('resultTitle');
+    const scoreValue = document.getElementById('resultScore');
+    const time = document.getElementById('resultTime');
+    const checks = document.getElementById('resultChecks');
+    const message = document.getElementById('resultMessage');
+
+    if(solutionUsed){
+        icon.textContent = '📋';
+    }else if(score >= 95){
+        icon.textContent = '👑';
+    }else if(score >= 85){
+        icon.textContent = '🏆';
+    }else if(score >= 70){
+        icon.textContent = '📊';
+    }else if(score >= 50){
+        icon.textContent = '☕';
+    }else{
+        icon.textContent = '🚨';
+    }
+
+    title.textContent = result.title;
+    scoreValue.textContent = score;
+    time.textContent = formatTime(elapsedSeconds);
+    checks.textContent = checkCount;
+    message.textContent = result.message;
+
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+}
+function closeResultModal(){
+    const modal = document.getElementById('resultModal');
+
+    if(!modal) return;
+
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+async function shareResult(){
+    const score = calculateScore();
+    const result = getResultMessage(score);
+
+    const shareText =
         "DOS Governance Challenge\n\n" +
         "Punteggio: " + score + "/100\n" +
         "Tempo: " + formatTime(elapsedSeconds) + "\n" +
         "Livello: " + result.title + "\n\n" +
-        result.message
-    );
+        window.location.href;
+
+    try{
+        if(navigator.share){
+            await navigator.share({
+                title: "DOS Governance Challenge",
+                text: shareText
+            });
+            return;
+        }
+
+        await navigator.clipboard.writeText(shareText);
+        alert("Risultato copiato negli appunti!");
+    }catch(error){
+        console.error("Condivisione non riuscita:", error);
+    }
 }
 function check(){
     checkCount++;
