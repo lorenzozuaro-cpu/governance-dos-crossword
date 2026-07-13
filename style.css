@@ -35,6 +35,8 @@ header p{margin:0;color:#d0d5dd}.wrap{max-width:1200px;margin:22px auto;padding:
     box-shadow:0 12px 35px rgba(0,0,0,0.35);
     padding:16px;
     color:white;
+    align-self:start;
+}
 }.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 button{border:0;border-radius:9px;padding:10px 14px;font-weight:700;cursor:pointer;background:var(--accent);color:white}
 button.secondary{background:#e8edf5;color:#17212b}.status{margin-left:auto;padding:10px 0;color:var(--muted);font-weight:600}
