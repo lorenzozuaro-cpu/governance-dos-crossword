@@ -487,6 +487,7 @@ function check(){
                     currentWrong++;
             }
         }
+    }        
     });
 
     wrongChecks += currentWrong;
