@@ -359,6 +359,7 @@ function showFinalResult(){
     const scoreValue = document.getElementById('resultScore');
     const time = document.getElementById('resultTime');
     const checks = document.getElementById('resultChecks');
+    const helps = document.getElementById('resultHelps');
     const message = document.getElementById('resultMessage');
 
     if(solutionUsed){
@@ -379,6 +380,7 @@ function showFinalResult(){
     scoreValue.textContent = score;
     time.textContent = formatTime(elapsedSeconds);
     checks.textContent = checkCount;
+    helps.textContent = helpCount;
     message.textContent = result.message;
 
     modal.classList.add('open');
