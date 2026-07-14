@@ -482,3 +482,94 @@ button.secondary{
         overflow:visible;
     }
 }
+/* HOME PAGE */
+.home-screen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+}
+
+.home-card{
+    width:min(560px, 100%);
+    padding:36px;
+    border-radius:22px;
+    text-align:center;
+    color:white;
+    background:rgba(18,18,18,0.92);
+    border:1px solid rgba(255,255,255,0.14);
+    box-shadow:0 24px 70px rgba(0,0,0,0.55);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+}
+
+.home-kicker{
+    margin:0 0 10px;
+    color:#b8c0cc;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:2px;
+    text-transform:uppercase;
+}
+
+.home-card h1{
+    margin:0 0 16px;
+    font-size:clamp(30px,5vw,48px);
+}
+
+.home-description{
+    margin:0 auto 28px;
+    max-width:460px;
+    color:#d0d5dd;
+    line-height:1.6;
+}
+
+.nickname-section{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    text-align:left;
+}
+
+.nickname-section label{
+    font-size:14px;
+    font-weight:700;
+}
+
+.nickname-section input{
+    width:100%;
+    padding:14px 16px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.18);
+    background:rgba(255,255,255,0.08);
+    color:white;
+    font-size:16px;
+    outline:none;
+}
+
+.nickname-section input:focus{
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(47,111,237,0.22);
+}
+
+.nickname-section button{
+    margin-top:4px;
+}
+
+.nickname-error{
+    min-height:20px;
+    margin:0;
+    color:#ff6b6b;
+    font-size:13px;
+}
+
+body.game-started .home-screen{
+    display:none;
+}
+
+body:not(.game-started) header,
+body:not(.game-started) main,
+body:not(.game-started) .footer{
+    display:none;
+}
