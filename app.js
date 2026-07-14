@@ -311,7 +311,24 @@ function calculateScore(){
 
     return Math.max(0, Math.min(100, score));
 }
+function buildGameResult(){
+    const score = calculateScore();
+    const result = getResultMessage(score);
 
+    return {
+        nickname: playerNickname,
+        score: score,
+        level: result.title,
+        elapsedSeconds: elapsedSeconds,
+        formattedTime: formatTime(elapsedSeconds),
+        checkCount: checkCount,
+        wrongChecks: wrongChecks,
+        helpCount: helpCount,
+        completed: !finishedManually,
+        finishedManually: finishedManually,
+        playedAt: new Date().toISOString()
+    };
+}
 function getResultMessage(score){
     if(solutionUsed){
         return {
@@ -381,6 +398,7 @@ function formatTime(seconds){
 function showFinalResult(){
     const score = calculateScore();
     const result = getResultMessage(score);
+    const gameResult = buildGameResult();
 
     const modal = document.getElementById('resultModal');
     const icon = document.getElementById('resultIcon');
@@ -417,6 +435,11 @@ function showFinalResult(){
     ? 'Terminata in anticipo'
     : 'Completata';
     message.textContent = result.message;
+    
+    localStorage.setItem(
+        'governanceDosLastResult',
+        JSON.stringify(gameResult)
+    );
 
     modal.classList.add('open');
     modal.setAttribute('aria-hidden', 'false');
