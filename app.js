@@ -624,7 +624,7 @@ function resetPuzzle(){
     updateTimerDisplay();
     updateProgress();
 }
-function startGame(){
+window.startGame = function(){
     const nicknameInput = document.getElementById('nicknameInput');
     const nicknameError = document.getElementById('nicknameError');
 
@@ -651,4 +651,4 @@ function startGame(){
     );
 
     document.body.classList.add('game-started');
-}
+};
