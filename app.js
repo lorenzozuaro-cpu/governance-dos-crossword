@@ -238,7 +238,7 @@ function save(){
             puzzleCompleted: puzzleCompleted,
             finishedManually: finishedManually,
             helpCount: helpCount,
-            helpedCells: Array.from(helpedCells)
+            helpedCells: Array.from(helpedCells),
             penalizedWrongCells: Array.from(penalizedWrongCells)
         })
     );
