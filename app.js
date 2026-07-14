@@ -300,6 +300,12 @@ function getResultMessage(score){
             message: "È stata aperta automaticamente una Change Request per annullare il risultato."
         };
     }
+    if(finishedManually){
+    return {
+        title: "Sfida terminata",
+        message: "Hai chiuso la partita prima del completamento. Il punteggio considera solo le risposte valide inserite."
+    };
+}
 
     if(score >= 95){
         return {
