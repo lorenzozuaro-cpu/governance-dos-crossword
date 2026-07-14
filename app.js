@@ -152,6 +152,19 @@ if(savedGameState){
 restoreTimerState();
 updateProgress();
 setGameLocked(puzzleCompleted);
+    const savedNickname = localStorage.getItem('governanceDosNickname');
+
+if(savedNickname){
+    playerNickname = savedNickname;
+
+    const nicknameInput = document.getElementById('nicknameInput');
+
+    if(nicknameInput){
+        nicknameInput.value = savedNickname;
+    }
+
+    document.body.classList.add('game-started');
+}
 }
 function buildClues(direction,title){
  const box=document.getElementById(direction); box.innerHTML=`<h2>${title}</h2>`;
@@ -608,4 +621,32 @@ function resetPuzzle(){
     localStorage.removeItem('governanceDosGameState');
     updateTimerDisplay();
     updateProgress();
+}
+function startGame(){
+    const nicknameInput = document.getElementById('nicknameInput');
+    const nicknameError = document.getElementById('nicknameError');
+
+    const nickname = nicknameInput.value.trim();
+
+    if(nickname.length < 3){
+        nicknameError.textContent =
+            'Inserisci un nickname di almeno 3 caratteri.';
+        return;
+    }
+
+    if(!/^[a-zA-Z0-9À-ÿ _-]+$/.test(nickname)){
+        nicknameError.textContent =
+            'Usa solo lettere, numeri, spazi, trattini o underscore.';
+        return;
+    }
+
+    playerNickname = nickname;
+    nicknameError.textContent = '';
+
+    localStorage.setItem(
+        'governanceDosNickname',
+        playerNickname
+    );
+
+    document.body.classList.add('game-started');
 }
