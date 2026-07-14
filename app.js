@@ -2,6 +2,8 @@
 let puzzle;
 let cells = [];
 let currentEntry = null;
+let playerNickname = '';
+let currentEntry = null;
 
 let timerInterval = null;
 let elapsedSeconds = 0;
