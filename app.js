@@ -7,6 +7,7 @@ let timerInterval = null;
 let elapsedSeconds = 0;
 let timerStarted = false;
 let puzzleCompleted = false;
+let finishedManually = false;
 let checkCount = 0;
 let wrongChecks = 0;
 let solutionUsed = false;
@@ -127,6 +128,7 @@ if(savedGameState){
         wrongChecks = Number(gameState.wrongChecks) || 0;
         solutionUsed = Boolean(gameState.solutionUsed);
         puzzleCompleted = Boolean(gameState.puzzleCompleted);
+        finishedManually = Boolean(gameState.finishedManually);
         helpCount = Number(gameState.helpCount) || 0;
         helpedCells = new Set(gameState.helpedCells || []);
     }catch(error){
@@ -134,6 +136,7 @@ if(savedGameState){
         wrongChecks = 0;
         solutionUsed = false;
         puzzleCompleted = false;
+        finishedManually = false;
         helpCount = 0;
         helpedCells = new Set();
     }
@@ -215,6 +218,7 @@ function save(){
             wrongChecks: wrongChecks,
             solutionUsed: solutionUsed,
             puzzleCompleted: puzzleCompleted,
+            finishedManually: finishedManually,
             helpCount: helpCount,
             helpedCells: Array.from(helpedCells)
         })
@@ -463,6 +467,7 @@ function check(){
 
     if(all && !puzzleCompleted){
         puzzleCompleted = true;
+        finishedManually = false;
         stopTimer();
         setGameLocked(true);
         save();
@@ -533,6 +538,7 @@ function finishGame(){
     }
 
     puzzleCompleted = true;
+    finishedManually = true;
     stopTimer();
     setGameLocked(true);
     save();
@@ -546,6 +552,7 @@ function resetPuzzle(){
     elapsedSeconds = 0;
     timerStarted = false;
     puzzleCompleted = false;
+    finishedManually = false;
     checkCount = 0;
     wrongChecks = 0;
     solutionUsed = false;
