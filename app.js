@@ -10,6 +10,7 @@ let puzzleCompleted = false;
 let checkCount = 0;
 let wrongChecks = 0;
 let solutionUsed = false;
+let helpCount = 0;
 let helpedCells = new Set();
 const key=(r,c)=>`${r}-${c}`;
 function updateTimerDisplay(){
@@ -126,12 +127,14 @@ if(savedGameState){
         wrongChecks = Number(gameState.wrongChecks) || 0;
         solutionUsed = Boolean(gameState.solutionUsed);
         puzzleCompleted = Boolean(gameState.puzzleCompleted);
+        helpCount = Number(gameState.helpCount) || 0;
         helpedCells = new Set(gameState.helpedCells || []);
     }catch(error){
         checkCount = 0;
         wrongChecks = 0;
         solutionUsed = false;
         puzzleCompleted = false;
+        helpCount = 0;
         helpedCells = new Set();
     }
 }
@@ -212,6 +215,7 @@ function save(){
             wrongChecks: wrongChecks,
             solutionUsed: solutionUsed,
             puzzleCompleted: puzzleCompleted,
+            helpCount: helpCount,
             helpedCells: Array.from(helpedCells)
         })
     );
@@ -476,6 +480,7 @@ function helpSelectedWord(){
         helpedCells.add(key(cell.r, cell.c));
     });
 
+    helpCount++;
     save();
     updateProgress();
 }
@@ -542,6 +547,7 @@ function resetPuzzle(){
     checkCount = 0;
     wrongChecks = 0;
     solutionUsed = false;
+    helpCount = 0;
     helpedCells = new Set();
     setGameLocked(false);
 
