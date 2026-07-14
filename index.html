@@ -4,6 +4,36 @@
 <meta name="description" content="Cruciverba interattivo dedicato alla governance e al project management DOS.">
 <title>DOS Governance Challenge</title><link rel="stylesheet" href="style.css"></head>
 <body>
+<section class="home-screen" id="homeScreen">
+    <div class="home-card">
+        <p class="home-kicker">DOS Governance Challenge</p>
+
+        <h1>Quanto conosci il linguaggio della governance?</h1>
+
+        <p class="home-description">
+            Completa il cruciverba, limita gli aiuti e prova a ottenere
+            il miglior punteggio possibile.
+        </p>
+
+        <div class="nickname-section">
+            <label for="nicknameInput">Inserisci il tuo nickname</label>
+
+            <input
+                type="text"
+                id="nicknameInput"
+                maxlength="20"
+                autocomplete="nickname"
+                placeholder="Es. GovernanceMaster"
+            >
+
+            <p class="nickname-error" id="nicknameError"></p>
+
+            <button type="button" onclick="startGame()">
+                Inizia la sfida
+            </button>
+        </div>
+    </div>
+</section>
 <header><h1 id="title">Parole Crociate Governance DOS</h1><p>Quanto conosci il linguaggio della governance?</p></header>
 <main class="wrap">
 <section class="card">
