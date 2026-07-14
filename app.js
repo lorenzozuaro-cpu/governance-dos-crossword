@@ -370,6 +370,7 @@ function showFinalResult(){
     const time = document.getElementById('resultTime');
     const checks = document.getElementById('resultChecks');
     const helps = document.getElementById('resultHelps');
+    const outcome = document.getElementById('resultOutcome');
     const message = document.getElementById('resultMessage');
 
     if(solutionUsed){
@@ -391,6 +392,9 @@ function showFinalResult(){
     time.textContent = formatTime(elapsedSeconds);
     checks.textContent = checkCount;
     helps.textContent = helpCount;
+    outcome.textContent = finishedManually
+    ? 'Terminata in anticipo'
+    : 'Completata';
     message.textContent = result.message;
 
     modal.classList.add('open');
