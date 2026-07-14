@@ -505,8 +505,12 @@ function helpSelectedWord(){
     const entryCells = getEntryCells(currentEntry);
 
     entryCells.forEach((cell, index) => {
-        cell.inp.value = currentEntry.answer[index];
-        helpedCells.add(key(cell.r, cell.c));
+        const correctLetter = currentEntry.answer[index];
+
+        if(cell.inp.value !== correctLetter){
+            helpedCells.add(key(cell.r, cell.c));
+            cell.inp.value = correctLetter;
+        }
     });
 
     helpCount++;
