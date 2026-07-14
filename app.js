@@ -503,6 +503,7 @@ function helpSelectedWord(){
     }
 
     const entryCells = getEntryCells(currentEntry);
+    let helpApplied = false;
 
     entryCells.forEach((cell, index) => {
         const correctLetter = currentEntry.answer[index];
@@ -510,13 +511,18 @@ function helpSelectedWord(){
         if(cell.inp.value !== correctLetter){
             helpedCells.add(key(cell.r, cell.c));
             cell.inp.value = correctLetter;
+            helpApplied = true;
         }
     });
 
+if(helpApplied){
     helpCount++;
-    save();
-    updateProgress();
 }
+
+save();
+updateProgress();
+}
+
 function setGameLocked(locked){
     cells.forEach(cell => {
         cell.inp.disabled = locked;
