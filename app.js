@@ -527,7 +527,10 @@ function setGameLocked(locked){
     }
 
     if(finishButton){
-        finishButton.disabled = locked;
+    finishButton.disabled = false;
+    finishButton.textContent = locked
+        ? 'Rivedi risultato'
+        : 'Termina';
     }
 }
 function finishGame(){
