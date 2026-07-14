@@ -138,6 +138,7 @@ if(savedGameState){
 
 restoreTimerState();
 updateProgress();
+setGameLocked(puzzleCompleted);
 }
 function buildClues(direction,title){
  const box=document.getElementById(direction); box.innerHTML=`<h2>${title}</h2>`;
@@ -457,6 +458,8 @@ function check(){
     if(all && !puzzleCompleted){
         puzzleCompleted = true;
         stopTimer();
+        setGameLocked(true);
+        save();
         showFinalResult();
     }
 }
@@ -475,6 +478,35 @@ function helpSelectedWord(){
 
     save();
     updateProgress();
+}
+function setGameLocked(locked){
+    cells.forEach(cell => {
+        cell.inp.disabled = locked;
+    });
+
+    const checkButton = document.querySelector(
+        'button[onclick="check()"]'
+    );
+
+    const helpButton = document.querySelector(
+        'button[onclick="helpSelectedWord()"]'
+    );
+
+    const finishButton = document.querySelector(
+        'button[onclick="finishGame()"]'
+    );
+
+    if(checkButton){
+        checkButton.disabled = locked;
+    }
+
+    if(helpButton){
+        helpButton.disabled = locked;
+    }
+
+    if(finishButton){
+        finishButton.disabled = locked;
+    }
 }
 function finishGame(){
     if(puzzleCompleted){
@@ -495,6 +527,7 @@ function finishGame(){
 
     puzzleCompleted = true;
     stopTimer();
+    setGameLocked(true);
     save();
     showFinalResult();
 }
@@ -510,6 +543,7 @@ function resetPuzzle(){
     wrongChecks = 0;
     solutionUsed = false;
     helpedCells = new Set();
+    setGameLocked(false);
 
     cells.forEach(x => {
         x.inp.value = '';
