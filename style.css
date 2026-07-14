@@ -286,6 +286,11 @@ button.secondary{
 .result-modal{
     position:fixed;
     inset:0;
+    width:100vw;
+    height:100vh;
+    max-width:none;
+    margin:0;
+    box-sizing:border-box;
     z-index:9999;
     display:none;
     align-items:center;
@@ -308,7 +313,7 @@ button.secondary{
 .result-panel{
     position:relative;
     z-index:1;
-    width:min(460px,100%);
+    width:min(460px, calc(100vw - 40px));
     padding:30px;
     border-radius:22px;
     text-align:center;
