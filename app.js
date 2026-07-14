@@ -13,6 +13,7 @@ let wrongChecks = 0;
 let solutionUsed = false;
 let helpCount = 0;
 let helpedCells = new Set();
+let penalizedWrongCells = new Set();
 const key=(r,c)=>`${r}-${c}`;
 function updateTimerDisplay(){
     const timer = document.getElementById('timer');
@@ -131,6 +132,9 @@ if(savedGameState){
         finishedManually = Boolean(gameState.finishedManually);
         helpCount = Number(gameState.helpCount) || 0;
         helpedCells = new Set(gameState.helpedCells || []);
+        penalizedWrongCells = new Set(
+           gameState.penalizedWrongCells || []
+        );
     }catch(error){
         checkCount = 0;
         wrongChecks = 0;
@@ -139,6 +143,7 @@ if(savedGameState){
         finishedManually = false;
         helpCount = 0;
         helpedCells = new Set();
+        penalizedWrongCells = new Set();
     }
 }
 
@@ -221,6 +226,7 @@ function save(){
             finishedManually: finishedManually,
             helpCount: helpCount,
             helpedCells: Array.from(helpedCells)
+            penalizedWrongCells: Array.from(penalizedWrongCells)
         })
     );
 }
@@ -458,12 +464,18 @@ function check(){
                 x.div.classList.add('correct');
             }else{
                 x.div.classList.add('wrong');
-                currentWrong++;
+
+                const cellKey = key(x.r, x.c);
+
+                if(!penalizedWrongCells.has(cellKey)){
+                    penalizedWrongCells.add(cellKey);
+                    currentWrong++;
             }
         }
     });
 
     wrongChecks += currentWrong;
+    save();
 
     const all = cells.every(x => {
         const entry = x.entries[0];
@@ -571,6 +583,7 @@ function resetPuzzle(){
     solutionUsed = false;
     helpCount = 0;
     helpedCells = new Set();
+    penalizedWrongCells = new Set();
     setGameLocked(false);
 
     cells.forEach(x => {
