@@ -388,6 +388,7 @@ function showFinalResult(){
     const icon = document.getElementById('resultIcon');
     const title = document.getElementById('resultTitle');
     const scoreValue = document.getElementById('resultScore');
+    const nicknameValue = document.getElementById('resultNickname');
     const time = document.getElementById('resultTime');
     const checks = document.getElementById('resultChecks');
     const helps = document.getElementById('resultHelps');
@@ -410,6 +411,7 @@ function showFinalResult(){
 
     title.textContent = result.title;
     scoreValue.textContent = score;
+    nicknameValue.textContent = playerNickname || '-';
     time.textContent = formatTime(elapsedSeconds);
     checks.textContent = checkCount;
     helps.textContent = helpCount;
