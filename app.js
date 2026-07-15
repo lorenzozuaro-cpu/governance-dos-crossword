@@ -192,9 +192,6 @@ if(savedNickname){
     if(nicknameInput){
         nicknameInput.value = savedNickname;
     }
-
-    document.body.classList.add('game-started');
-}
 }
 function buildClues(direction,title){
  const box=document.getElementById(direction); box.innerHTML=`<h2>${title}</h2>`;
