@@ -153,6 +153,35 @@ if(savedGameState){
 restoreTimerState();
 updateProgress();
 setGameLocked(puzzleCompleted);
+if(gamePaused && !puzzleCompleted){
+    cells.forEach(cell => {
+        cell.inp.disabled = true;
+    });
+
+    const checkButton = document.querySelector(
+        'button[onclick="check()"]'
+    );
+
+    const helpButton = document.querySelector(
+        'button[onclick="helpSelectedWord()"]'
+    );
+
+    const finishButton = document.querySelector(
+        'button[onclick="finishGame()"]'
+    );
+
+    const pauseButton = document.getElementById('pauseButton');
+
+    if(checkButton) checkButton.disabled = true;
+    if(helpButton) helpButton.disabled = true;
+    if(finishButton) finishButton.disabled = true;
+
+    if(pauseButton){
+        pauseButton.textContent = 'Riprendi';
+    }
+
+    document.body.classList.add('game-paused');
+    }    
     const savedNickname = localStorage.getItem('governanceDosNickname');
 
 if(savedNickname){
@@ -564,6 +593,80 @@ if(helpApplied){
 
 save();
 updateProgress();
+}
+function togglePause(){
+    if(puzzleCompleted){
+        return;
+    }
+
+    const pauseButton = document.getElementById('pauseButton');
+
+    if(!gamePaused){
+        gamePaused = true;
+        stopTimer();
+
+        cells.forEach(cell => {
+            cell.inp.disabled = true;
+        });
+
+        const checkButton = document.querySelector(
+            'button[onclick="check()"]'
+        );
+
+        const helpButton = document.querySelector(
+            'button[onclick="helpSelectedWord()"]'
+        );
+
+        const finishButton = document.querySelector(
+            'button[onclick="finishGame()"]'
+        );
+
+        if(checkButton) checkButton.disabled = true;
+        if(helpButton) helpButton.disabled = true;
+        if(finishButton) finishButton.disabled = true;
+
+        if(pauseButton){
+            pauseButton.textContent = 'Riprendi';
+        }
+
+        document.body.classList.add('game-paused');
+        save();
+        return;
+    }
+
+    gamePaused = false;
+
+    cells.forEach(cell => {
+        cell.inp.disabled = false;
+    });
+
+    const checkButton = document.querySelector(
+        'button[onclick="check()"]'
+    );
+
+    const helpButton = document.querySelector(
+        'button[onclick="helpSelectedWord()"]'
+    );
+
+    const finishButton = document.querySelector(
+        'button[onclick="finishGame()"]'
+    );
+
+    if(checkButton) checkButton.disabled = false;
+    if(helpButton) helpButton.disabled = false;
+    if(finishButton) finishButton.disabled = false;
+
+    if(pauseButton){
+        pauseButton.textContent = 'Pausa';
+    }
+
+    document.body.classList.remove('game-paused');
+
+    if(cells.some(cell => cell.inp.value)){
+        startTimer();
+    }
+
+    save();
 }
 
 function setGameLocked(locked){
