@@ -573,3 +573,28 @@ body:not(.game-started) main,
 body:not(.game-started) .footer{
     display:none;
 }
+/* STATO PAUSA */
+body.game-paused .grid,
+body.game-paused .clues{
+    filter:blur(8px) brightness(0.35);
+    pointer-events:none;
+    user-select:none;
+}
+
+body.game-paused .grid{
+    position:relative;
+}
+
+body.game-paused .card{
+    transition:filter 0.2s ease;
+}
+
+body.game-paused #pauseButton{
+    background:var(--accent);
+    color:white;
+}
+
+body.game-paused .timer::after{
+    content:" · IN PAUSA";
+    font-weight:700;
+}
