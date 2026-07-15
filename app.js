@@ -286,6 +286,9 @@ function updateProgress(){
 
     const status = document.getElementById('status');
     const progressBar = document.getElementById('progressBar');
+    const finishButton = document.querySelector(
+    'button[onclick="finishGame()"]'
+);
 
     if(status){
         status.textContent =
@@ -295,6 +298,14 @@ function updateProgress(){
     if(progressBar){
         progressBar.style.width = `${percentage}%`;
     }
+    if(finishButton && !puzzleCompleted){
+    const gridCompleted = done === total && total > 0;
+
+    finishButton.disabled = gridCompleted;
+    finishButton.textContent = gridCompleted
+        ? 'Completa: premi Controlla'
+        : 'Termina';
+}
 }
 function calculateScore(){
     const totalCells = cells.length;
@@ -708,6 +719,12 @@ function finishGame(){
     }
 
     const filledCells = cells.filter(cell => cell.inp.value).length;
+    if(filledCells === cells.length){
+    alert(
+        'Hai compilato tutte le caselle. Premi Controlla per verificare e completare la sfida.'
+    );
+    return;
+    }
 
     if(filledCells === 0){
         alert('Inserisci almeno una risposta prima di terminare la sfida.');
