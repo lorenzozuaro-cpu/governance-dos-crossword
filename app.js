@@ -193,6 +193,7 @@ if(savedNickname){
         nicknameInput.value = savedNickname;
     }
 }
+}
 function buildClues(direction,title){
  const box=document.getElementById(direction); box.innerHTML=`<h2>${title}</h2>`;
  puzzle.entries.filter(e=>e.direction===direction).sort((a,b)=>a.number-b.number).forEach(e=>{
