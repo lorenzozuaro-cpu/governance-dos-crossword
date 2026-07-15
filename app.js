@@ -390,41 +390,41 @@ function getResultMessage(score){
     if(score >= 95){
         return {
             title: "Governance Legend",
-            message: "Hai completato la sfida senza convocare una call di allineamento. Evento rarissimo."
+            message: "Con te la Governance è salva, indicaci la via"
         };
     }
 
     if(score >= 85){
         return {
             title: "Governance Master",
-            message: "Ottima performance. Le retrospettive ti temono."
+            message: "Ottima performance. Sei vicino al TOP!"
         };
     }
 
     if(score >= 70){
         return {
-            title: "PMO Specialist",
-            message: "Qualche acronimo ti ha rallentato, ma il reporting può partire."
+            title: "PM Specialist",
+            message: " Ci siamo! Qualche acronimo ti ha rallentato, non cambiare il focus."
         };
     }
 
     if(score >= 50){
         return {
-            title: "Meeting Survivor",
-            message: "Sei arrivato alla fine. Ora serve solo una riunione per analizzare le lesson learned."
+            title: "PM Intermedio",
+            message: "Sei arrivato alla fine. La situazione è gestibile, ma fissiamo un allineamento."
         };
     }
 
     if(score >= 30){
         return {
-            title: "Action Item Creator",
-            message: "Hai creato parecchie action. Resta solo da capire chi sarà l’Accountable."
+            title: "PM Base",
+            message: "Le basi ci sono. Ora serve solo qualche action item."
         };
     }
 
     return {
-        title: "Change Request urgente",
-        message: "Il risultato richiede un tavolo di approfondimento e almeno tre follow-up."
+        title: "PM in onboarding",
+        message: "Prima settimana difficile. Ti mandiamo il materiale da studiare."
     };
 }
 
