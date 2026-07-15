@@ -496,32 +496,179 @@ function closeResultModal(){
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
 }
+function createResultImage(){
+    const gameResult = buildGameResult();
 
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1080;
+
+    const ctx = canvas.getContext('2d');
+
+    const background = ctx.createLinearGradient(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    background.addColorStop(0, '#111827');
+    background.addColorStop(1, '#020617');
+
+    ctx.fillStyle = background;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.textAlign = 'center';
+
+    ctx.font = '700 34px Arial';
+    ctx.fillText(
+        'DOS GOVERNANCE CHALLENGE',
+        canvas.width / 2,
+        110
+    );
+
+    ctx.font = '700 64px Arial';
+    ctx.fillText(
+        gameResult.level,
+        canvas.width / 2,
+        220
+    );
+
+    ctx.font = '700 180px Arial';
+    ctx.fillText(
+        gameResult.score,
+        canvas.width / 2,
+        445
+    );
+
+    ctx.font = '500 46px Arial';
+    ctx.fillText(
+        '/100',
+        canvas.width / 2,
+        510
+    );
+
+    ctx.font = '700 42px Arial';
+    ctx.fillText(
+        gameResult.nickname || 'Giocatore',
+        canvas.width / 2,
+        610
+    );
+
+    ctx.font = '500 34px Arial';
+
+    ctx.fillText(
+        `Tempo: ${gameResult.formattedTime}`,
+        canvas.width / 2,
+        700
+    );
+
+    ctx.fillText(
+        `Controlli: ${gameResult.checkCount}  ·  Aiuti: ${gameResult.helpCount}`,
+        canvas.width / 2,
+        760
+    );
+
+    ctx.fillText(
+        gameResult.finishedManually
+            ? 'Terminata in anticipo'
+            : 'Completata',
+        canvas.width / 2,
+        820
+    );
+
+    ctx.font = '400 26px Arial';
+    ctx.fillStyle = '#cbd5e1';
+
+    ctx.fillText(
+        'Condividi il risultato nella chat per entrare in classifica',
+        canvas.width / 2,
+        940
+    );
+
+    return canvas;
+}
 async function shareResult(){
-    const score = calculateScore();
-    const result = getResultMessage(score);
+    const gameResult = buildGameResult();
+    const canvas = createResultImage();
 
     const shareText =
         "DOS Governance Challenge\n\n" +
-        "Punteggio: " + score + "/100\n" +
-        "Tempo: " + formatTime(elapsedSeconds) + "\n" +
-        "Livello: " + result.title + "\n\n" +
-        window.location.href;
+        "Giocatore: " + gameResult.nickname + "\n" +
+        "Punteggio: " + gameResult.score + "/100\n" +
+        "Tempo: " + gameResult.formattedTime + "\n" +
+        "Controlli: " + gameResult.checkCount + "\n" +
+        "Aiuti: " + gameResult.helpCount + "\n" +
+        "Livello: " + gameResult.level + "\n" +
+        "Esito: " +
+        (
+            gameResult.finishedManually
+                ? "Terminata in anticipo"
+                : "Completata"
+        );
 
-    try{
-        if(navigator.share){
-            await navigator.share({
-                title: "DOS Governance Challenge",
-                text: shareText
-            });
+    canvas.toBlob(async blob => {
+        if(!blob){
+            alert('Non è stato possibile creare l’immagine.');
             return;
         }
 
-        await navigator.clipboard.writeText(shareText);
-        alert("Risultato copiato negli appunti!");
-    }catch(error){
-        console.error("Condivisione non riuscita:", error);
-    }
+        const file = new File(
+            [blob],
+            'dos-governance-result.png',
+            {
+                type: 'image/png'
+            }
+        );
+
+        try{
+            if(
+                navigator.share &&
+                navigator.canShare &&
+                navigator.canShare({
+                    files: [file]
+                })
+            ){
+                await navigator.share({
+                    title: 'DOS Governance Challenge',
+                    text: shareText,
+                    files: [file]
+                });
+
+                return;
+            }
+
+            const downloadLink = document.createElement('a');
+
+            downloadLink.href = URL.createObjectURL(blob);
+            downloadLink.download =
+                'dos-governance-result.png';
+
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            downloadLink.remove();
+
+            URL.revokeObjectURL(downloadLink.href);
+
+            try{
+                await navigator.clipboard.writeText(shareText);
+
+                alert(
+                    'Immagine scaricata e risultato copiato negli appunti.'
+                );
+            }catch(error){
+                alert(
+                    'Immagine scaricata. Ora puoi condividerla nella chat.'
+                );
+            }
+        }catch(error){
+            console.error(
+                'Condivisione non riuscita:',
+                error
+            );
+        }
+    }, 'image/png');
 }
 function check(){
     checkCount++;
